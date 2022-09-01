@@ -1,7 +1,9 @@
 # rho-matlab
 The code base is to use pre-existing physiology data from calcium imaging to generate synthetic data, and analyse for Time Cells using 6 methods (8 algorithms).
 
-Before you begin:
+To demo the synthetic dataset generation algorithm, run the live script "syntheticData_live.mlx" in "../rho-matlab/CustomFunctions/syntheticData_live.mlx". This uses the configuration file "setupSyntheticDataParametersSingle.m" in "../rho-matlab/localCopies/setupSyntheticDataParametersSingle.m".
+
+Before you begin the full analysis:
 All data used has been processed for cell masks and roi detection using Suite-2p (https://www.suite2p.org).
 Any other cell detection system will also work, but with appropriate modifications.
 Here, I have provided an example dataset with the repository - "M26_20180514.mat"
