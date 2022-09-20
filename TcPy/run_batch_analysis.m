@@ -50,10 +50,8 @@ frameDt = 1.0 / 14.5;
 r2bThresh = 3.0;
 r2bPercentile = 99.5;
 
-%saveFolder = '/media/ananth/Storage/Work/Analysis/RHO/M26/20180514';
-saveFolder = '/home/bhalla/ananthamurthy/Work/Analysis/Imaging/M26/20180514';
-bigfname = 'synthDATA_20220405_gRun3_batch_537.mat';
-smallfname = 'synthDATA_20220405_gRun1_batch_36.mat';
+saveFolder = '../sampledata';
+smallfname = 'sample_synth_data.mat';
 sdcpStart = 1;
 sdcpEnd = 1;        % Just doing the first dataset here.
 
@@ -93,3 +91,4 @@ for runi = sdcpStart:1:sdcpEnd
     end
 end
 
+exit
