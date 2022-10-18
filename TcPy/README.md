@@ -18,11 +18,15 @@ pybind11/C++ code) for the tc module for Python. This needs gcc 7.3 or higher.
 ## Examples:
 ---------
 For the impatient, once you have installed the files, here are some things
-to do from the TcPy directory. In the examples below, the input data files
-are Matlab(R) version 7.3 files, organized as `[dataset][frame#][trial#][cell#]`
-These files can be generated from data analysis code, or from the synthetic
-data generation programs developed in this project. We provide an example
+to do from the TcPy directory. In the examples below, We provide an example
 data file named *sample_synth_data.mat*
+
+You can substitute any other file for this example data file.
+Input data files are Matlab(R) version 7.3 files, organized as 
+`[dataset][frame#][trial#][cell#]`
+These files can be generated from data analysis code, or from the synthetic
+data generation programs developed in this project, described in the **rho-matlab**
+subdirectory.
 
 Here are the key script calls. Python must be Python 3.
 
@@ -53,9 +57,43 @@ Dataset    #SigMean    #sigBoot     #sigBoth
 ...
 ```
 
-Output with somewhat different numbers is obtained from *r2b_demo.py*
+Output with somewhat different numbers is obtained from *r2b_demo.py*:
 
-A few additional stats are reported by *peq_demo.py*
+```
+> python r2b_demo.py ../sampledata/sample_synth_data.mat 
+Classification of first 30 cells for Dataset 0
+CellIdx sigMean   SigBootstrap  pkFrame   
+     0       0       0            2
+     1       0       0           36
+     2       1       1           20
+     3       1       1           21
+...
+
+Number of time cells classified by each method, for each dataset
+Dataset    #SigMean    #sigBoot
+   0          71          66
+   1          73          66
+
+```
+
+A few additional stats are reported by *peq_demo.py*:
+
+```
+> python peq_demo.py ../sampledata/sample_synth_data.mat
+Stats for first 30 cells for Dataset 0
+CellIdx  sigPEQ      noise     eventwidth   imprecision    hit trial ratio   
+     0       1       30.34        6.25         40.96        0.05
+     1       0       14.09        8.09         40.64        0.07
+     2       0        9.63        6.55         36.13        0.47
+     3       1        7.14        5.48         24.47        0.58
+...
+Number of time cells classified for each dataset
+Dataset    # time cells
+   0          48
+   1          56
+
+```
+
 
 
 If your source data file is generated from the synthetic data program, you 
@@ -67,18 +105,29 @@ and it will use ground-truth data from the file to see how well the various
 methods handle the data. Output is like this:
 
 ```
+ > python ground_truth_check.py ../sampledata/sample_synth_data.mat
     |Mau Peak Sig |   Mau TI    | Mau pk&&TI  |  r2b thresh | r2b bootstr | peq score
 idx | tn fn fp tp | tn fn fp tp | tn fn fp tp | tn fn fp tp | tn fn fp tp | tn fn fp tp
-  0 | 68  2  0 65 | 67  1  1 66 | 68  3  0 64 | 64  1  4 66 | 68  1  0 66 | 55 32 13 35
-  1 | 67  5  1 62 | 68  0  0 67 | 68  5  0 62 | 65  0  3 67 | 68  1  0 66 | 44 35 24 32
-...
+  0 | 68  2  0 65 | 67  2  1 65 | 68  4  0 63 | 62  1  6 66 | 68  1  0 66 | 55 32 13 35
+  1 | 67  5  1 62 | 68  0  0 67 | 68  5  0 62 | 64  0  4 67 | 68  1  0 66 | 44 35 24 32
+
 ```
 
 If you want to run a batch analysis on a synthetic data file do the following. 
 It will dump all the data into .csv files. If a file exists with the same name
-then the output is appended on to it.
+then the output is **appended** on to it.
 
 > python run_batch_analysis.py *filename*
+
+For example:
+
+```
+> python run_batch_analysis.py ../s
+sampledata/ setup.py    
+Malpoa 119 > python run_batch_analysis.py ../sampledata/sample_synth_data.mat 
+Completed dataset 0 in time 3.14
+Completed dataset 1 in time 6.29
+```
 
 This will generate the files `ti.csv`, `r2b.csv`, `peq.csv` and `groundTruth.csv`
 
