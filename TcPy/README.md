@@ -43,6 +43,7 @@ This will run an analysis for time-cells in the specified file,
 and report something like this:
 
 ```
+> python ti_demo.py ../sampledata/sample_synth_data.mat
 Classification of first 30 cells for Dataset 0
 CellIdx sigMean    SigTI   SigBoth pkFrame   FracTrialsFired
      0       0       0       0        0       0.6000
@@ -54,7 +55,6 @@ Number of time cells classified by each method, for each dataset
 Dataset    #SigMean    #sigBoot     #sigBoth
    0          65          67          64
    1          64          67          63
-...
 ```
 
 Output with somewhat different numbers is obtained from *r2b_demo.py*:
@@ -122,9 +122,7 @@ then the output is **appended** on to it.
 For example:
 
 ```
-> python run_batch_analysis.py ../s
-sampledata/ setup.py    
-Malpoa 119 > python run_batch_analysis.py ../sampledata/sample_synth_data.mat 
+> python run_batch_analysis.py ../sampledata/sample_synth_data.mat 
 Completed dataset 0 in time 3.14
 Completed dataset 1 in time 6.29
 ```
