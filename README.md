@@ -37,6 +37,23 @@ memory efficiency, at the cost of some complexity in the code.
 The Python functions can also be accessed via Matlab, and we illustrate how
 this is done.
 
+## Functions
+
+|Name		| Description			| Location	| Language  |
+|---------------|-------------------------------|---------------|-----------|
+| ti_demo.py | Command-line demo. Runs Temporal information analysis from Mau et al 2018. <br> Reports TImean, TIboot and TIboth classifications | TcPy | Python interface and C++ numerics |
+| r2b_demo.py | Command-line demo. Runs Ridge-to-background analysis from Modi et al 2014. <br> Reports R2Bmean, and R2B bootstrap classifications | TcPy | Python interface and C++ numerics |
+| peq_demo.py | Command-line demo. Runs parametric equation analysis from current study. <br> Reports PEQ threshold classification, and estimates for noise, eventWidth, imprecision and hit trial ratio for dataset. | TcPy | Python interface and C++ numerics |
+| ground_truth_check.py | Command-line demo. Uses synthetic data files to assess accuracy of classification by the various Mau and Modi algorithms. | TcPy | Python interface and C++ numerics |
+| benchmark.py | Command-line demo. Simple time and memory benchmarks for the Mau and Modi algorithms. | TcPy | Python interface and C++ numerics |
+| run_batch_analysis.py | Command-line demo, output to console. Runs a batch analysis using all methods on a data file. <br> Generates csv files for TI, R2B, PEQ and ground truth classifications. | TcPy | Python interface and C++ numerics |
+| run_batch_analysis.m | Command-line demo, output to console. Similar to above, but for Matlab. Runs a batch analysis on specified datafile. | TcPy | Matlab wrapper around Python/C++ commands |
+| pyBindMap.py | Provides an interface for Matlab programmers, to the python/C++ functions using two wrapper functions: **runTIanalysis** and **runR2Banalysis** | TcPy | Python |
+| content | content | content | content|
+| content | content | content | content|
+| content | content | content | content|
+| content | content | content | content|
+
 ## Directories:
 
 	- TcPy: Time Cell analysis Python demos, pybind11 and example driver 

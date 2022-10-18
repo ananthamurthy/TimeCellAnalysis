@@ -89,9 +89,9 @@ def analyzeDatasets( dat ):
         # Print classification of first 30 cells for first dataset
         if idx == 0:   
             print( "Classification of first 30 cells for Dataset 0" )
-            print( "CellIdx sigMean    SigTI   pkFrame   ")
+            print( "CellIdx sigMean   SigBootstrap  pkFrame   ")
             for cellIdx, rr in enumerate( r2bScore ):
-                print( "{:6d}{:8d}{:8d} {:8d}".format( cellIdx, rr.sigMean, rr.sigBootstrap, rr.meanPkIdx ) )
+                print( "{:6d}{:8d}{:8d}     {:8d}".format( cellIdx, rr.sigMean, rr.sigBootstrap, rr.meanPkIdx ) )
                 if cellIdx >= 30:
                     break
             print( "\nNumber of time cells classified by each method, for each dataset")
