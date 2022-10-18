@@ -49,10 +49,8 @@ this is done.
 | run_batch_analysis.py | Command-line production script, output to CSV files. Runs a batch analysis using all methods on a data file. <br> Generates csv files for TI, R2B, PEQ and ground truth classifications. | TcPy | Python interface and C++ numerics |
 | run_batch_analysis.m | Command-line production script , output to CSV files. Similar to above, but for Matlab. | TcPy | Matlab wrapper around Python/C++ commands |
 | pyBindMap.py | Provides an interface for Matlab programmers, to the python/C++ functions using two wrapper functions: **runTIanalysis** and **runR2Banalysis** | TcPy | Python |
-| content | content | content | content|
-| content | content | content | content|
-| content | content | content | content|
-| content | content | content | content|
+| synthesisDemo.m | Command-line demo, output to file: "synthData-demo.mat". Generates a synthetic 2-P time-cell data file.  | rho-matlab/demos | Matlab |
+| dodFbF.m | Utility function to convert experimental 2P data output from Suite2P to df by f form. | rho-matlab/CustomFunctions | Matlab |
 
 ## Directories:
 
