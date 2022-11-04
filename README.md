@@ -39,18 +39,20 @@ this is done.
 
 ## Functions
 
-|Name		| Description			| Location	| Language  |
-|---------------|-------------------------------|---------------|-----------|
-| ti_demo.py | Command-line demo, output to console. Runs Temporal information analysis from Mau et al 2018. <br> Reports TImean, TIboot and TIboth classifications | TcPy | Python interface and C++ numerics |
-| r2b_demo.py | Command-line demo, output to console. Runs Ridge-to-background analysis from Modi et al 2014. <br> Reports R2Bmean, and R2B bootstrap classifications | TcPy | Python interface and C++ numerics |
-| peq_demo.py | Command-line demo, output to console. Runs parametric equation analysis from current study. <br> Reports PEQ threshold classification, and estimates for noise, eventWidth, imprecision and hit trial ratio for dataset. | TcPy | Python interface and C++ numerics |
-| ground_truth_check.py | Command-line demo, output to console. Uses synthetic data files to assess accuracy of classification by the various Mau and Modi algorithms. | TcPy | Python interface and C++ numerics |
-| benchmark.py | Command-line demo, output to console. Simple time and memory benchmarks for the Mau, Modi, or PEQ algorithms. | TcPy | Python interface and C++ numerics |
-| run_batch_analysis.py | Command-line production script, output to CSV files. Runs a batch analysis using all methods on a data file. Generates csv files for TI, R2B, PEQ and ground truth classifications. | TcPy | Python interface and C++ numerics |
-| run_batch_analysis.m | Command-line production script , output to CSV files. Similar to above, but for Matlab. | TcPy | Matlab wrapper around Python/C++ commands |
-| pyBindMap.py | Provides an interface for Matlab programmers, to the python/C++ functions using two wrapper functions: **runTIanalysis** and **runR2Banalysis** | TcPy | Python |
-| synthesisDemo.m | Command-line demo, output to file: "synthData-demo.mat". Generates a synthetic 2-P time-cell data file.  | rho-matlab/<br>demos | Matlab |
-| dodFbF.m | Utility function to convert experimental 2P data output from Suite2P to df by f form. | rho-matlab/<br>CustomFunctions | Matlab |
+All these functions should be run from the cloned repository, TimeCellAnalysis.
+
+
+|Name		| Description			| Command Line | Location	| Language  |
+|---------------|-------------------------------|--------------|----------------|-----------|
+| synthesisDemo.m | Command-line demo, output to file: "synthData-demo.mat". Generates a synthetic 2-P time-cell data file.  | cd TimeCellAnalysis/rho-matlab/demos <br> matlab -nodisplay -nosplash -r "synthesisDemo; quit" | rho-matlab/<br>demos | Matlab |
+| ti_demo.py | Command-line demo, output to console. Runs Temporal information analysis from Mau et al 2018. <br> Reports TImean, TIboot and TIboth classifications | python TcPy/ti_demo.py sampleData/sample_synth_data.mat |TcPy | Python interface and C++ numerics |
+| r2b_demo.py | Command-line demo, output to console. Runs Ridge-to-background analysis from Modi et al 2014. <br> Reports R2Bmean, and R2B bootstrap classifications | python TcPy/r2b_demo.py sampleData/sample_synth_data.mat | TcPy | Python interface and C++ numerics |
+| peq_demo.py | Command-line demo, output to console. Runs parametric equation analysis from current study. <br> Reports PEQ threshold classification, and estimates for noise, eventWidth, imprecision and hit trial ratio for dataset. | python TcPy/peq_demo.py sampleData/sample_synth_data.mat | TcPy | Python interface and C++ numerics |
+| ground_truth_check.py | Command-line demo, output to console. Uses synthetic data files to assess accuracy of classification by the various Mau and Modi algorithms. | python TcPy/ground_druth_check.py sampleData/sample_synth_data.mat | TcPy | Python interface and C++ numerics |
+| benchmark.py | Command-line demo, output to console. Simple time and memory benchmarks for the Mau, Modi, or PEQ algorithms. | python TcPy/run_batch_analysis.py sampleData/sample_synth_data.mat | TcPy | Python interface and C++ numerics |
+| run_batch_analysis.py | Command-line production script, output to CSV files. Runs a batch analysis using all methods on a data file. Generates csv files for TI, R2B, PEQ and ground truth classifications. | python TcPy/ti_demp.py sampleData/sample_synth_data.mat | TcPy | Python interface and C++ numerics |
+| pyBindMap.py | Provides an interface for Matlab programmers, to the python/C++ functions using two wrapper functions: **runTIanalysis** and **runR2Banalysis** | Utility function, not run from command line | TcPy | Python |
+| dodFbF.m | Utility function to convert experimental 2P data output from Suite2P to df by f form. | Utility function, not run from command line | rho-matlab/<br>CustomFunctions | Matlab |
 
 ## Directories:
 
