@@ -57,6 +57,7 @@ All these functions should be run from the cloned repository, TimeCellAnalysis.
 ## Generating Paper Figures
 All these functions should be run from the cloned repository, TimeCellAnalysis/rho-matlab/paperFigures.
 One first generates the csv files with the output of the time-cell analysis using the function described above: run_batch_analysis.py
+Subsequent analysis and paper figures are generated using the following functions.
 
 |Name	    	 	 | Description			| Command Line                        |
 |------------------------|-------------------------------|-------------------------------------|
