@@ -54,6 +54,16 @@ All these functions should be run from the cloned repository, TimeCellAnalysis.
 | pyBindMap.py | Provides an interface for Matlab programmers, to the python/C++ functions using two wrapper functions: **runTIanalysis** and **runR2Banalysis** | Utility function, not run from command line | TcPy | Python |
 | dodFbF.m | Utility function to convert experimental 2P data output from Suite2P to df by f form. | Utility function, not run from command line | rho-matlab/<br>CustomFunctions | Matlab |
 
+## Generating Paper Figures
+All these functions should be run from the cloned repository, TimeCellAnalysis/rho-matlab/paperFigures.
+|Name	    	 	 | Description			| Command Line                        |
+|------------------------|-------------------------------|-------------------------------------|
+|paperFiguresSynth.m 	 | Plots all figures estimating algorithm performance for Synthetic Data analysis (Paper Fig. 4, Fig. 5, Fig. 6) | $ matlab -r "papersFiguresSynth.m; quit"|
+|paperFiguresReal.m 	 | Plots all figures estimating algorithm performance for Real Physiology Data analysis (Paper Fig. 7) | $ matlab -r "papersFiguresReal.m; quit"|
+|radialPlotSummary.m 	 | Plots a radial plot aka spider plot for algorithm dependence analysis (Paper Fig. 8), to be used only with Synthetic Data Analysis Outputs| $ matlab -r "radialPlotSummary.m; quit"|
+|paperFiguresSplits.m 	 | For diagnostics: Plots all figures estimating algorithm performance over all the regimes (Unphysiological, Canonical, and Physiological)| $ matlab -r "../src/paperFiguresSplits.m; quit"|
+
+
 ## Directories:
 
 	- TcPy: Time Cell analysis Python demos, pybind11 and example driver 
