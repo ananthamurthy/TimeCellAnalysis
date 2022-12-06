@@ -38,12 +38,14 @@ R2B_PERCENTILE = 99.5
 NUM_ITER = 10
 
 def doBenchmark( dat, method ):
+    global NUM_ITER
     ap = tc.AnalysisParams()        # Use defaults for AnalysisParams
     tip = tc.TiAnalysisParams()     # Use defaults for TIAnalysisParams
     tip.frameDt = 1.0/ 12.5         # Reassign default frameDt
     pep = tc.PeqAnalysisParams()    # Use defaults for Parameter Eqn.
     sd0 = dat["/sdo_batch/syntheticDATA"]   # Synthetic dataset.
     t0 = time.time()
+    NUM_ITER = min( NUM_ITER, len( sd0 ) )
 
     # Go through all entries in synthetic dataset. Each corresponds to
     # a recording session with different conditions of noise, background...

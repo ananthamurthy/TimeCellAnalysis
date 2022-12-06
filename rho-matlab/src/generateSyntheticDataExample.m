@@ -1,4 +1,4 @@
-% Function call: "Synthetic Data Generator" by Kambadur Ananthamurthy
+% "Synthetic Data Generator" by Kambadur Ananthamurthy
 % This code uses real dfbf data, eventLibrary_2D, and control parameters to
 % generate synthetic datasets.
 % Currently uses one session of real data, but can generate synthetic
@@ -6,10 +6,13 @@
 % gDate: date when data generation occurred
 % gRun: run number of data generation (multiple runs could occur on the same date)
 
+function generateSyntheticDataExample(workingOnServer, figureDetails)
+
 disp('Generating Example Schematics ...')
 gDate = erase(datestr(now, 29), '-'); % Format: yyyymmdd
 gRun = 1;
-workingOnServer = 0;
+normalizeEachCell = 1;
+%workingOnServer = 0;
 
 if workingOnServer == 1
     HOME_DIR = '/home/bhalla/ananthamurthy/';
@@ -31,6 +34,15 @@ ops0.diary           = 0;
 
 %figureDetails = compileFigureDetails(16, 2, 10, 0.5, 'jet'); %(fontSize, lineWidth, markerSize, transparency, colorMap)
 ops0.onlyProbeTrials = 0;
+C = magma(8);
+
+%selectedRGBs = [4, 1, 3, 5];
+selectedRGBs = [5, 1, 7, 8];
+C1 = zeros(length(selectedRGBs), 3);
+for rgbi = 1:length(selectedRGBs)
+    C1(rgbi, :) = C(selectedRGBs(rgbi), :);
+end
+C1rev = C1(length(selectedRGBs):-1:1, :);
 
 if ops0.diary
     if workingOnServer == 1
@@ -118,12 +130,12 @@ clear s
 for runi = 1:1:nDatasets
     fprintf('Dataset: %i\n', runi)
     sdo = syntheticDataMaker(db, DATA_2D, eventLibrary_2D, sdcp(runi));
-    
+
     %Run specifics
     scurr = rng;
     sdo.scurr = scurr; %Saves current status of randomseed
     sdo.endTime = datestr(now,'mm-dd-yyyy_HH-MM');
-    
+
     % Develop Reference Quality (Q)
     params4Q.nCells = nCells;
     params4Q.hitTrialPercent = sdo.hitTrialPercent;
@@ -139,9 +151,9 @@ for runi = 1:1:nDatasets
     params4Q.alpha = 1;
     params4Q.beta = 1;
     params4Q.gamma = 10;
-    
+
     sdo.Q = developRefQ(params4Q);
-    
+
     %     % Derived Time
     %     delta = 3;
     %     skipFrames = [];
@@ -150,24 +162,23 @@ for runi = 1:1:nDatasets
     %     [~, derivedT] = max(ETH(:,:), [], 2); % Actual Time Vector
     %     sdo.T = derivedT;
     sdo.T = zeros(nCells, 1); %No strict need
-    
+
     %And finally
     sdo_batch(runi) = sdo;
 end
 
 %% Plots
-figureDetails = compileFigureDetails(12, 2, 5, 0.2, 'inferno'); %(fontSize, lineWidth, markerSize, transparency, colorMap)
+%figureDetails = compileFigureDetails(12, 2, 5, 0.2, 'inferno'); %(fontSize, lineWidth, markerSize, transparency, colorMap)
 fig1 = figure(1);
 clf
 set(fig1, 'Position', [100, 300, 900, 1200])
 
-C = linspecer(6);
-for myCase = 1:8
+for myCase = 1:10
     %cell = randi(100);
     cell = 50;
-    
+
     a = squeeze(sdo_batch(myCase).syntheticDATA(cell, 1:5, :));
-    
+
     if myCase == 1
         myText = sprintf('Noise: Low (%i%%)', sdcp(myCase).noisePercent);
     elseif myCase == 2
@@ -184,20 +195,23 @@ for myCase = 1:8
         myText = sprintf('Hit Trial Ratio: Low (%i%%)', sdcp(myCase).maxHitTrialPercent);
     elseif myCase == 8
         myText = sprintf('Hit Trial Ratio: High (%i%%)', sdcp(myCase).maxHitTrialPercent);
+    elseif myCase == 9
+        myText = ['Background: Low (\lambda = ' sprintf('%.1f)', sdcp(myCase).backDistLambda)];
+    elseif myCase == 10
+        myText = ['Background: High (\lambda = ' sprintf('%.1f)', sdcp(myCase).backDistLambda)];
     end
-    
-    subplot(6, 2, myCase)
-    
+
+    subplot(7, 2, myCase)
     if mod(myCase, 2) ~= 0
         for trial =  1:5
-            plot((a(trial, :)*100) + (trial-1)*250, 'Color', C(2, :), 'LineWidth', figureDetails.lineWidth)
+            plot((a(trial, :)*100) + (trial-1)*250, 'Color', C1(2, :), 'LineWidth', figureDetails.lineWidth)
             set(gca,'YTick',[-200 200])
             xlim([1 246])
             ylim([-200 1500])
             hold on
         end
         hold off
-        if myCase == 7
+        if myCase == 9
             xlabel('Frames (@14.5Hz)', ...
                 'FontSize', figureDetails.fontSize, ...
                 'FontWeight', 'bold')
@@ -208,7 +222,7 @@ for myCase = 1:8
     else
         if myCase == 1 %High Noise
             for trial = 1:1
-                plot((a(trial, :)*100) + (trial-1)*250, 'Color', C(1, :), 'LineWidth', figureDetails.lineWidth)
+                plot((a(trial, :)*100) + (trial-1)*250, 'Color', C1(1, :), 'LineWidth', figureDetails.lineWidth)
                 set(gca,'YTick',[-200 200])
                 xlim([1 246])
                 ylim([-200 1500])
@@ -217,7 +231,7 @@ for myCase = 1:8
             hold off
         else
             for trial = 1:5
-                plot((a(trial, :)*100) + (trial-1)*250, 'Color', C(1, :), 'LineWidth', figureDetails.lineWidth)
+                plot((a(trial, :)*100) + (trial-1)*250, 'Color', C1(1, :), 'LineWidth', figureDetails.lineWidth)
                 set(gca,'YTick',[-200 200])
                 xlim([1 246])
                 ylim([-200 1500])
@@ -225,49 +239,83 @@ for myCase = 1:8
             end
             hold off
         end
-        
+
     end
     title(myText, ...
         'FontSize', figureDetails.fontSize, ...
         'FontWeight', 'bold')
-    
+
     set(gca, 'FontSize', figureDetails.fontSize)
     clear a
 end
 
-subplot(6, 2, [9, 11])
-imagesc(squeeze(mean(sdo_batch(9).syntheticDATA, 2)*100));
-
-xlabel('Trial-Avg. Frames', ...
+subplot(7, 2, [11, 13])
+if normalizeEachCell
+    myDatasetTrialAvg = mean(sdo_batch(11).syntheticDATA, 2);
+    for celli = 1:size(myDatasetTrialAvg, 1)
+        maxVal = max(squeeze(myDatasetTrialAvg(celli, :)));
+        myDatasetTrialAvg(celli, :) = myDatasetTrialAvg(celli, :)/maxVal;
+    end
+    imagesc(squeeze(myDatasetTrialAvg)*100);
+else
+    imagesc(squeeze(mean(sdo_batch(11).syntheticDATA, 2)*100));
+end
+% title('Trial-Avg. Synth. Calcium Traces', ...
+%     'FontSize', figureDetails.fontSize, ...
+%     'FontWeight', 'bold')
+xlabel('Frames', ...
     'FontSize', figureDetails.fontSize, ...
     'FontWeight', 'bold')
-ylabel(sprintf('All Cells + Back. + %i%% Noise', sdcp(9).noisePercent), ...
+ylabel(sprintf('Cells (@ %i%% Noise)', sdcp(11).noisePercent), ...
     'FontSize', figureDetails.fontSize, ...
     'FontWeight', 'bold')
 z = colorbar;
+% if normalizeEachCell
+%     ylabel(z,'Norm. dF/F (%)', ...
+%     'FontSize', figureDetails.fontSize, ...
+%     'FontWeight', 'bold')
+% else
 % ylabel(z,'dF/F (%)', ...
 %         'FontSize', figureDetails.fontSize, ...
 %         'FontWeight', 'bold')
-colormap(linspecer)
+% end
+colormap(magma)
 set(gca, 'FontSize', figureDetails.fontSize)
 
-subplot(6, 2, [10, 12])
-imagesc(squeeze(mean(sdo_batch(10).syntheticDATA, 2)*100));
-
-xlabel('Trial-Avg. Frames', ...
+subplot(7, 2, [12, 14])
+if normalizeEachCell
+    myDatasetTrialAvg = mean(sdo_batch(12).syntheticDATA, 2);
+    for celli = 1:size(myDatasetTrialAvg, 1)
+        maxVal = max(squeeze(myDatasetTrialAvg(celli, :)));
+        myDatasetTrialAvg(celli, :) = myDatasetTrialAvg(celli, :)/maxVal;
+    end
+    imagesc(squeeze(myDatasetTrialAvg)*100);
+else
+    imagesc(squeeze(mean(sdo_batch(12).syntheticDATA, 2)*100));
+end
+% title('Trial-Avg. Synth. Calcium Traces', ...
+%     'FontSize', figureDetails.fontSize, ...
+%     'FontWeight', 'bold')
+xlabel('Frames', ...
     'FontSize', figureDetails.fontSize, ...
     'FontWeight', 'bold')
-ylabel(sprintf('All Cells + Back. + %i%% Noise', sdcp(10).noisePercent), ...
+ylabel(sprintf('Cells (@ %i%% Noise)', sdcp(12).noisePercent), ...
     'FontSize', figureDetails.fontSize, ...
     'FontWeight', 'bold')
 z = colorbar;
-ylabel(z,'dF/F (%)', ...
+if normalizeEachCell
+    ylabel(z,'Trial-Avg. Norm. dF/F (%)', ...
         'FontSize', figureDetails.fontSize, ...
         'FontWeight', 'bold')
-colormap(linspecer)
+else
+    ylabel(z,'dF/F (%)', ...
+        'FontSize', figureDetails.fontSize, ...
+        'FontWeight', 'bold')
+end
+colormap(magma)
 set(gca, 'FontSize', figureDetails.fontSize)
 
-print(sprintf('%s/Examples', ...
+print(sprintf('%s/figs/1-Examples', ...
     HOME_DIR2), ...
     '-dpng')
 
